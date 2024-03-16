@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.core.exceptions import ValidationError
+
 
 User = get_user_model()
 
@@ -93,6 +95,11 @@ class Product(models.Model):
         auto_now=True
     )
 
+    def clean(self):
+        if self.discount < self.price:
+            raise ValidationError({'discount': 'Старая цена должна быть больше чем актуальная'})
+        return super(Product, self).clean()
+
     def __str__(self):
         return self.title
 
@@ -116,3 +123,40 @@ class Storage(models.Model):
 
     def __str__(self):
         return str(self.product)
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT
+    )
+    product = models.ForeignKey(Storage, on_delete=models.PROTECT)
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} --> {self.product}"
+
+
+class Poster(models.Model):
+    product = models.ForeignKey(
+        Storage,
+        on_delete=models.PROTECT
+    )
+    logo = models.ImageField(
+        upload_to='media/poster'
+    )
+    description = models.CharField(
+        max_length=223
+    )
+    is_first = models.BooleanField(
+        default=False
+    )
+    is_second = models.BooleanField(
+        default=False
+    )
+
+    def __str__(self):
+        return str(self.product)
+
+
+
