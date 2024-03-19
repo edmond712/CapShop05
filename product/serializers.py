@@ -54,3 +54,11 @@ class ProductDetailSerializer(serializers.ModelSerializer):
         model = Product
         fields = ('images', 'title', 'description', 'price', 'size')
 
+
+class StorageCreateUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Storage
+        fields = ('product', 'quantity', 'status')
+
+
