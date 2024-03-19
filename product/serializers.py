@@ -47,4 +47,9 @@ class PosterListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProductDetailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Product
+        fields = ('images', 'title', 'description', 'price', 'size')
 

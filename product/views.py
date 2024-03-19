@@ -1,7 +1,8 @@
 from django.db.models import F
 from rest_framework.views import Response, APIView, status
 from .models import Color, Category, Brand, Image, Product, Storage, Poster
-from .serializers import StorageListSerializer, FavoriteCreateSerializer, PosterListSerializer, BrandListSerializer
+from .serializers import StorageListSerializer, FavoriteCreateSerializer, PosterListSerializer, BrandListSerializer, \
+    ProductDetailSerializer
 
 
 class StorageListView(APIView):
@@ -50,4 +51,13 @@ class IndexListView(APIView):
         return Response(data)
 
 
+class ProductDetailView(APIView):
+
+     def get(self, request, pk):
+
+        elements = Product.objects.get(pk=pk)
+
+        serializer = ProductDetailSerializer(elements)
+
+        return Response(serializer.data)
 
