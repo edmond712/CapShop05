@@ -47,4 +47,11 @@ class PosterListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class StorageCreateUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Storage
+        fields = ('product', 'quantity', 'status')
+
+
 
