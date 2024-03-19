@@ -48,6 +48,7 @@ class PosterListSerializer(serializers.ModelSerializer):
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
+    images = ImageListSerializer(many=True)
 
     class Meta:
         model = Product

@@ -55,9 +55,9 @@ class ProductDetailView(APIView):
 
      def get(self, request, pk):
 
-        elements = Product.objects.get(pk=pk)
+        product = Product.objects.get(pk=pk)
 
-        serializer = ProductDetailSerializer(elements)
+        serializer = ProductDetailSerializer(product)
 
         return Response(serializer.data)
 
